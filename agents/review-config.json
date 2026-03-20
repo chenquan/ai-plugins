@@ -1,0 +1,321 @@
+{
+  "version": "1.0.0",
+  "description": "代码审查专家配置文件 - 定义审查规则、阈值和偏好设置",
+
+  "rules": {
+    "code_quality": {
+      "max_line_length": 100,
+      "max_function_length": 50,
+      "max_file_length": 500,
+      "max_complexity": 10,
+      "max_nesting_depth": 4,
+      "max_parameters": 5,
+      "require_docstrings": true,
+      "require_type_annotations": true
+    },
+    "security": {
+      "check_sql_injection": true,
+      "check_xss": true,
+      "check_command_injection": true,
+      "check_hardcoded_secrets": true,
+      "check_insecure_crypto": true,
+      "check_insecure_deserialization": true,
+      "check_path_traversal": true
+    },
+    "performance": {
+      "check_n_plus_one_queries": true,
+      "check_missing_cache": true,
+      "check_inefficient_loops": true,
+      "check_memory_leaks": true,
+      "check_unnecessary_copy": true,
+      "check_missing_batch": true
+    },
+    "testing": {
+      "require_tests_for_new_code": true,
+      "min_test_coverage": 80,
+      "check_missing_edge_cases": true,
+      "check_missing_error_handling": true,
+      "check_test_quality": true
+    }
+  },
+
+  "language_specific": {
+    "go": {
+      "enable_gofmt": true,
+      "enable_golint": true,
+      "enable_staticcheck": true,
+      "enable_govet": true,
+      "require_error_handling": true,
+      "require_exported_docstrings": true
+    },
+    "python": {
+      "enable_pylint": true,
+      "enable_flake8": true,
+      "enable_mypy": true,
+      "enable_bandit": true,
+      "require_type_hints": true,
+      "require_docstrings": true,
+      "follow_pep8": true
+    },
+    "javascript": {
+      "enable_eslint": true,
+      "enable_security_eslint": true,
+      "require_strict_mode": false,
+      "prefer_const": true,
+      "require_jsdoc": false
+    },
+    "typescript": {
+      "enable_eslint": true,
+      "enable_strict_mode": true,
+      "require_type_annotations": true,
+      "enable_no_any": true
+    },
+    "java": {
+      "enable_checkstyle": true,
+      "enable_spotbugs": true,
+      "enable_pmd": true,
+      "require_java_doc": true
+    },
+    "cpp": {
+      "enable_clang_tidy": true,
+      "enable_cppcheck": true,
+      "use_smart_pointers": true,
+      "require_raii": true
+    },
+    "csharp": {
+      "enable_stylecop": true,
+      "enable_fxcop": true,
+      "require_xml_doc": true
+    },
+    "ruby": {
+      "enable_rubocop": true,
+      "enable_reek": true,
+      "require_rdoc": false
+    },
+    "rust": {
+      "enable_clippy": true,
+      "enable_rustfmt": true,
+      "require_cargo_doc": true
+    }
+  },
+
+  "ignore": {
+    "patterns": [
+      "vendor/*",
+      "node_modules/*",
+      "*.min.js",
+      "*.min.css",
+      "*.pb.go",
+      "*.generated.*",
+      "dist/*",
+      "build/*",
+      "target/*",
+      "bin/*",
+      "obj/*",
+      ".git/*"
+    ],
+    "files": [
+      "package-lock.json",
+      "yarn.lock",
+      "Cargo.lock",
+      "Gemfile.lock",
+      "go.sum",
+      "pom.xml",
+      "build.gradle"
+    ]
+  },
+
+  "severity_levels": {
+    "critical": {
+      "description": "安全漏洞或关键bug，必须立即修复",
+      "max_fix_time": "24小时",
+      "examples": [
+        "SQL注入",
+        "XSS漏洞",
+        "命令注入",
+        "硬编码密钥",
+        "数据泄露",
+        "空指针解引用"
+      ]
+    },
+    "high": {
+      "description": "严重问题，应尽快修复",
+      "max_fix_time": "1周",
+      "examples": [
+        "性能问题",
+        "资源泄漏",
+        "错误处理缺失",
+        "并发安全问题"
+      ]
+    },
+    "medium": {
+      "description": "中等问题，应该修复",
+      "max_fix_time": "1个月",
+      "examples": [
+        "代码重复",
+        "命名不规范",
+        "缺少文档",
+        "测试覆盖不足"
+      ]
+    },
+    "low": {
+      "description": "轻微问题，可以逐步改进",
+      "max_fix_time": "下个迭代",
+      "examples": [
+        "代码风格",
+        "格式问题",
+        "注释质量",
+        "可读性改进"
+      ]
+    }
+  },
+
+  "review_strategies": {
+    "quick_review": {
+      "name": "快速审查",
+      "max_lines": 200,
+      "max_files": 5,
+      "estimated_time": "5-10分钟",
+      "focus": [
+        "critical",
+        "high"
+      ]
+    },
+    "standard_review": {
+      "name": "标准审查",
+      "max_lines": 1000,
+      "max_files": 20,
+      "estimated_time": "30-60分钟",
+      "focus": [
+        "critical",
+        "high",
+        "medium"
+      ]
+    },
+    "comprehensive_review": {
+      "name": "全面审查",
+      "max_lines": null,
+      "max_files": null,
+      "estimated_time": "2-4小时",
+      "focus": [
+        "critical",
+        "high",
+        "medium",
+        "low"
+      ],
+      "include_architecture_analysis": true,
+      "include_trend_analysis": true
+    },
+    "training_review": {
+      "name": "培训审查",
+      "max_lines": null,
+      "max_files": null,
+      "estimated_time": "60-90分钟",
+      "focus": "all",
+      "include_teaching": true,
+      "include_learning_plan": true
+    }
+  },
+
+  "reporting": {
+    "formats": {
+      "console": {
+        "enabled": true,
+        "use_emoji": true,
+        "use_colors": true
+      },
+      "markdown": {
+        "enabled": true,
+        "include_code_blocks": true,
+        "include_tables": true
+      },
+      "json": {
+        "enabled": true,
+        "include_raw_data": false
+      }
+    },
+    "sections": [
+      "executive_summary",
+      "critical_issues",
+      "high_priority_issues",
+      "medium_priority_issues",
+      "low_priority_issues",
+      "patterns_analysis",
+      "recommendations",
+      "action_items",
+      "metrics"
+    ],
+    "metrics": {
+      "code_quality_score": {
+        "enabled": true,
+        "weight": 0.3
+      },
+      "security_score": {
+        "enabled": true,
+        "weight": 0.3
+      },
+      "performance_score": {
+        "enabled": true,
+        "weight": 0.2
+      },
+      "test_coverage_score": {
+        "enabled": true,
+        "weight": 0.2
+      }
+    }
+  },
+
+  "tracking": {
+    "enabled": true,
+    "format": "markdown",
+    "file": ".review-tracking.md",
+    "fields": [
+      "id",
+      "title",
+      "severity",
+      "category",
+      "file",
+      "line",
+      "description",
+      "suggestion",
+      "status",
+      "assignee",
+      "created_at",
+      "updated_at",
+      "resolved_at",
+      "estimated_time",
+      "actual_time"
+    ]
+  },
+
+  "integration": {
+    "git_hooks": {
+      "pre_commit": {
+        "enabled": false,
+        "fail_on": ["critical", "high"]
+      },
+      "pre_push": {
+        "enabled": false,
+        "fail_on": ["critical"]
+      }
+    },
+    "ci_cd": {
+      "github_actions": {
+        "enabled": false,
+        "fail_on_threshold": 60
+      }
+    }
+  },
+
+  "custom_rules": {
+    "project_specific": [],
+    "team_standards": [],
+    "business_rules": []
+  },
+
+  "templates": {
+    "issue_report": "# Issue {id}\n\n**Severity**: {severity}\n**Category**: {category}\n**Location**: {file}:{line}\n\n## Description\n{description}\n\n## Current Code\n```{language}\n{code}\n```\n\n## Suggested Fix\n```{language}\n{fix}\n```\n\n## References\n{references}\n",
+    "summary_report": "# Code Review Summary\n\n**Date**: {date}\n**Reviewer**: {reviewer}\n**Files Reviewed**: {file_count}\n\n## Overview\n{overview}\n\n## Critical Issues ({critical_count})\n{critical_issues}\n\n## High Priority Issues ({high_count})\n{high_issues}\n\n## Medium Priority Issues ({medium_count})\n{medium_issues}\n\n## Low Priority Issues ({low_count})\n{low_issues}\n\n## Summary\n{summary}\n",
+    "improvement_plan": "# Code Quality Improvement Plan\n\n## Current State\n{current_state}\n\n## Goals\n{goals}\n\n## Action Items\n\n### Immediate (0-1 week)\n{immediate_actions}\n\n### Short-term (1-4 weeks)\n{short_term_actions}\n\n### Medium-term (1-3 months)\n{medium_term_actions}\n\n### Long-term (3-12 months)\n{long_term_actions}\n\n## Metrics\n{metrics}\n\n## Resources\n{resources}\n"
+  }
+}

@@ -1,0 +1,18 @@
+{
+  "mcpServers": {
+    "example-server": {
+      "command": "node",
+      "args": ["path/to/server.js"],
+      "description": "示例 MCP 服务器配置"
+    },
+    "filesystem": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-filesystem",
+        "/allowed/path"
+      ],
+      "description": "文件系统访问服务器"
+    }
+  }
+}
