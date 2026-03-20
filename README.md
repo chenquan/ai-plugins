@@ -1,5 +1,10 @@
 # AI Plugins for Claude Code
 
+[![Version](https://img.shields.io/badge/version-0.2.0-blue)](https://github.com/chenquan/ai-plugins/releases)
+[![License](https://img.shields.io/badge/license-MIT-green)](LICENSE)
+[![Code Review](https://img.shields.io/badge/code%20review-20%2B%20languages-orange)](README.md#支持的编程语言)
+[![Claude Code](https://img.shields.io/badge/Claude%20Code-compatible-brightgreen)](https://claude.ai/code)
+
 这是一套功能丰富的 Claude Code 插件集合，旨在提升开发效率和代码质量。
 
 ## 📦 插件内容
@@ -74,11 +79,49 @@
 
 ### 安装插件
 
+#### 方式 1: 通过 Claude Code Marketplace 安装（推荐）
+
+在 Claude Code 中执行：
+
+```
+安装插件 ai-plugins
+```
+
+或者使用命令行：
+
+```bash
+# 如果 Claude Code 支持 CLI 安装
+claude plugin install ai-plugins
+```
+
+#### 方式 2: 本地安装
+
 将本插件放置在 Claude Code 的插件目录中：
 
 ```bash
 # 克隆仓库
 git clone https://github.com/chenquan/ai-plugins.git ~/.claude/plugins/ai-plugins
+
+# Windows 用户
+git clone https://github.com/chenquan/ai-plugins.git %USERPROFILE%\.claude\plugins\ai-plugins
+```
+
+#### 验证安装
+
+安装完成后，重启 Claude Code 并验证：
+
+```bash
+# 查看所有可用命令
+/help
+
+# 测试代码提交命令
+/commit
+
+# 测试代码审查命令
+/cr
+
+# 调用代码审查专家代理
+请使用 code-review-expert 代理帮我审查代码
 ```
 
 ### 使用斜杠命令
