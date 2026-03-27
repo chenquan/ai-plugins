@@ -71,7 +71,7 @@ git push origin v0.3.0
 
 ```json
 {
-  "name": "ai-plugins",
+  "name": "common",
   "version": "0.3.0",
   "description": "...",
   "features": {...},
@@ -116,10 +116,10 @@ npx @claude-code/marketplace submit
 
 ```bash
 # 通过 marketplace 安装
-claude plugin install ai-plugins
+claude plugin install common
 
 # 或者在 Claude Code 中
-安装插件 ai-plugins
+安装插件 common
 ```
 
 #### 4.2 功能测试
@@ -232,7 +232,7 @@ A:
 
 A: Marketplace 通常只显示最新版本，但用户可以安装特定版本：
 ```bash
-claude plugin install ai-plugins@0.2.0
+claude plugin install common@0.2.0
 ```
 
 ## 联系方式

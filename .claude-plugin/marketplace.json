@@ -1,0 +1,35 @@
+{
+  "name": "ai-plugins",
+  "owner": {
+    "name": "chenquan",
+    "email": "noreply@example.com"
+  },
+  "metadata": {
+    "description": "AI Plugins for Claude Code - 智能代码提交、代码审查和专家级代码审查顾问",
+    "version": "0.2.0",
+    "homepage": "https://github.com/chenquan/ai-plugins"
+  },
+  "plugins": [
+    {
+      "name": "common",
+      "source": "./plugins/common",
+      "description": "Claude Code 插件集合 - 增强开发工作流，包含智能代码提交、代码审查、专家级代码审查顾问等功能",
+      "version": "0.2.0",
+      "author": {
+        "name": "chenquan",
+        "url": "https://github.com/chenquan"
+      },
+      "category": "productivity",
+      "homepage": "https://github.com/chenquan/ai-plugins",
+      "keywords": [
+        "productivity",
+        "development",
+        "code-quality",
+        "git",
+        "commit",
+        "code-review",
+        "workflow"
+      ]
+    }
+  ]
+}
