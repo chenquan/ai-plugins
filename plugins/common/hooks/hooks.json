@@ -1,16 +1,3 @@
 {
-  "hooks": {
-    "PreToolUse": [
-      {
-        "description": "编辑前检查",
-        "enabled": false
-      }
-    ],
-    "PostToolUse": [
-      {
-        "description": "编辑后格式化",
-        "enabled": false
-      }
-    ]
-  }
+  "hooks": {}
 }
