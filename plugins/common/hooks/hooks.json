@@ -1,23 +1,14 @@
 {
   "hooks": {
-    "beforeEdit": [
+    "PreToolUse": [
       {
         "description": "编辑前检查",
-        "command": "echo 'About to edit file: $FILE_PATH'",
         "enabled": false
       }
     ],
-    "afterEdit": [
+    "PostToolUse": [
       {
         "description": "编辑后格式化",
-        "command": "echo 'Edited file: $FILE_PATH'",
-        "enabled": false
-      }
-    ],
-    "beforeCommand": [
-      {
-        "description": "命令前日志",
-        "command": "echo 'Running command: $COMMAND_NAME'",
         "enabled": false
       }
     ]
