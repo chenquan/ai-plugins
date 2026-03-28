@@ -2,7 +2,8 @@
   "version": "1.0.0",
   "description": "代码审查专家配置文件 - 定义审查规则、阈值和偏好设置",
 
-  "rules": {
+  "core": {
+    "description": "核心规则 - Agent自带分析能力即可检查",
     "code_quality": {
       "max_line_length": 100,
       "max_function_length": 50,
@@ -39,63 +40,106 @@
     }
   },
 
-  "language_specific": {
-    "go": {
-      "enable_gofmt": true,
-      "enable_golint": true,
-      "enable_staticcheck": true,
-      "enable_govet": true,
-      "require_error_handling": true,
-      "require_exported_docstrings": true
+  "extended": {
+    "description": "扩展规则 - 需要外部工具支持（/cr命令、Linter等）",
+    "language_specific": {
+      "go": {
+        "enable_gofmt": true,
+        "enable_golint": true,
+        "enable_staticcheck": true,
+        "enable_govet": true,
+        "require_error_handling": true,
+        "require_exported_docstrings": true
+      },
+      "python": {
+        "enable_pylint": true,
+        "enable_flake8": true,
+        "enable_mypy": true,
+        "enable_bandit": true,
+        "require_type_hints": true,
+        "require_docstrings": true,
+        "follow_pep8": true
+      },
+      "javascript": {
+        "enable_eslint": true,
+        "enable_security_eslint": true,
+        "require_strict_mode": false,
+        "prefer_const": true,
+        "require_jsdoc": false
+      },
+      "typescript": {
+        "enable_eslint": true,
+        "enable_strict_mode": true,
+        "require_type_annotations": true,
+        "enable_no_any": true
+      },
+      "java": {
+        "enable_checkstyle": true,
+        "enable_spotbugs": true,
+        "enable_pmd": true,
+        "require_java_doc": true
+      },
+      "cpp": {
+        "enable_clang_tidy": true,
+        "enable_cppcheck": true,
+        "use_smart_pointers": true,
+        "require_raii": true
+      },
+      "csharp": {
+        "enable_stylecop": true,
+        "enable_fxcop": true,
+        "require_xml_doc": true
+      },
+      "ruby": {
+        "enable_rubocop": true,
+        "enable_reek": true,
+        "require_rdoc": false
+      },
+      "rust": {
+        "enable_clippy": true,
+        "enable_rustfmt": true,
+        "require_cargo_doc": true
+      }
     },
-    "python": {
-      "enable_pylint": true,
-      "enable_flake8": true,
-      "enable_mypy": true,
-      "enable_bandit": true,
-      "require_type_hints": true,
-      "require_docstrings": true,
-      "follow_pep8": true
+    "integration": {
+      "git_hooks": {
+        "description": "需要额外配置 .git/hooks/ 文件",
+        "pre_commit": {
+          "enabled": false,
+          "fail_on": ["critical", "high"],
+          "setup_required": "创建 .git/hooks/pre-commit 文件"
+        },
+        "pre_push": {
+          "enabled": false,
+          "fail_on": ["critical"],
+          "setup_required": "创建 .git/hooks/pre-push 文件"
+        }
+      },
+      "ci_cd": {
+        "description": "需要配置 CI/CD 系统（GitHub Actions, GitLab CI等）",
+        "github_actions": {
+          "enabled": false,
+          "fail_on_threshold": 60,
+          "setup_required": "创建 .github/workflows/code-review.yml"
+        }
+      }
     },
-    "javascript": {
-      "enable_eslint": true,
-      "enable_security_eslint": true,
-      "require_strict_mode": false,
-      "prefer_const": true,
-      "require_jsdoc": false
-    },
-    "typescript": {
-      "enable_eslint": true,
-      "enable_strict_mode": true,
-      "require_type_annotations": true,
-      "enable_no_any": true
-    },
-    "java": {
-      "enable_checkstyle": true,
-      "enable_spotbugs": true,
-      "enable_pmd": true,
-      "require_java_doc": true
-    },
-    "cpp": {
-      "enable_clang_tidy": true,
-      "enable_cppcheck": true,
-      "use_smart_pointers": true,
-      "require_raii": true
-    },
-    "csharp": {
-      "enable_stylecop": true,
-      "enable_fxcop": true,
-      "require_xml_doc": true
-    },
-    "ruby": {
-      "enable_rubocop": true,
-      "enable_reek": true,
-      "require_rdoc": false
-    },
-    "rust": {
-      "enable_clippy": true,
-      "enable_rustfmt": true,
-      "require_cargo_doc": true
+    "tools": {
+      "description": "外部工具配置",
+      "static_analysis": {
+        "golangci_lint": {
+          "command": "golangci-lint run",
+          "install": "go install github.com/golangci/golangci-lint/cmd/golangci-lint@latest"
+        },
+        "pylint": {
+          "command": "pylint",
+          "install": "pip install pylint"
+        },
+        "eslint": {
+          "command": "eslint",
+          "install": "npm install -g eslint"
+        }
+      }
     }
   },
 
@@ -173,47 +217,43 @@
   "review_strategies": {
     "quick_review": {
       "name": "快速审查",
+      "mode": "快速启动模式",
       "max_lines": 200,
       "max_files": 5,
       "estimated_time": "5-10分钟",
-      "focus": [
-        "critical",
-        "high"
-      ]
+      "focus": ["critical", "high"],
+      "uses_core_only": true
     },
     "standard_review": {
       "name": "标准审查",
+      "mode": "完整模式",
       "max_lines": 1000,
       "max_files": 20,
       "estimated_time": "30-60分钟",
-      "focus": [
-        "critical",
-        "high",
-        "medium"
-      ]
+      "focus": ["critical", "high", "medium"],
+      "uses_cr_command": true
     },
     "comprehensive_review": {
       "name": "全面审查",
+      "mode": "完整模式",
       "max_lines": null,
       "max_files": null,
       "estimated_time": "2-4小时",
-      "focus": [
-        "critical",
-        "high",
-        "medium",
-        "low"
-      ],
+      "focus": ["critical", "high", "medium", "low"],
       "include_architecture_analysis": true,
-      "include_trend_analysis": true
+      "include_trend_analysis": true,
+      "uses_cr_command": true
     },
     "training_review": {
       "name": "培训审查",
+      "mode": "完整模式",
       "max_lines": null,
       "max_files": null,
       "estimated_time": "60-90分钟",
       "focus": "all",
       "include_teaching": true,
-      "include_learning_plan": true
+      "include_learning_plan": true,
+      "uses_core_and_knowledge_base": true
     }
   },
 
@@ -286,25 +326,6 @@
       "estimated_time",
       "actual_time"
     ]
-  },
-
-  "integration": {
-    "git_hooks": {
-      "pre_commit": {
-        "enabled": false,
-        "fail_on": ["critical", "high"]
-      },
-      "pre_push": {
-        "enabled": false,
-        "fail_on": ["critical"]
-      }
-    },
-    "ci_cd": {
-      "github_actions": {
-        "enabled": false,
-        "fail_on_threshold": 60
-      }
-    }
   },
 
   "custom_rules": {
